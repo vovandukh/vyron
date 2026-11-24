@@ -1,0 +1,59 @@
+name: Bug report
+description: Something in Vyron doesn't work as it should
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for testing Vyron! The more of the fields below you fill in, the faster it gets fixed.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected and what you saw instead. Screenshots help a lot.
+    validations:
+      required: true
+  - type: dropdown
+    id: part
+    attributes:
+      label: Which part
+      options:
+        - Vyron Web (browser)
+        - Vyron Screen (printer touchscreen)
+        - Install / uninstall / update
+        - Vyron Core
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Vyron version and channel
+      description: Settings → About (Web) or Settings → About (Screen), e.g. "0.5.0-beta, stable"
+    validations:
+      required: true
+  - type: input
+    id: host
+    attributes:
+      label: Host board and OS
+      description: e.g. "BTT CB1, Armbian trixie" or "Raspberry Pi 4, Raspberry Pi OS bookworm"
+    validations:
+      required: true
+  - type: input
+    id: screen
+    attributes:
+      label: Printer screen (if any)
+      description: e.g. "BTT TFT35 SPI 480×320", "7″ HDMI 1024×600", "none"
+  - type: input
+    id: klipper
+    attributes:
+      label: Klipper and Moonraker versions
+      description: From Settings → Updates
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: |
+        For install problems — the full output of install.sh. For the screen — `journalctl -u vyron-screen -n 50`.
+        For Vyron Core — `~/printer_data/logs/vyron-core.log`.
+      render: shell

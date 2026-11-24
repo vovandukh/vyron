@@ -8,7 +8,7 @@ export default {
   'cam.state.live': 'Наживо', 'cam.state.error': 'Немає зв’язку, повторюю…', 'cam.state.unsupported': 'Цей тип камери поки не підтримується',
 
   'common.set': 'Задати', 'common.off': 'Вимкнути', 'common.cancel': 'Скасувати', 'common.save': 'Зберегти', 'common.ok': 'Так',
-  'fmt.hm': '{h} г {m} хв', 'fmt.m': '{m} хв',
+  'fmt.hm': '{h} г {m} хв', 'fmt.m': '{m} хв', 'fmt.hmS': '{h} г {m} хв', 'fmt.mS': '{m} хв',
   'unit.mm': '{v} мм', 'unit.m': '{v} м',
   'eta.left': 'залишилось {t}',
 

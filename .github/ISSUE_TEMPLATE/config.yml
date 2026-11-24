@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Live demo
+    url: https://vovandukh.github.io/vyron-demo/
+    about: Try Vyron in the browser without a printer.

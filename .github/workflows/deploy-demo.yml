@@ -29,7 +29,8 @@ concurrency:
 
 jobs:
   deploy:
-    if: github.actor != 'github-actions[bot]'
+    # Only the public repository deploys the demo (the private development repo has the same workflows)
+    if: github.repository == 'vovandukh/vyron' && github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     env:
       DEMO_REPO: ${{ vars.DEMO_REPO || 'vovandukh/vyron-demo' }}

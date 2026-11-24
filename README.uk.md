@@ -5,6 +5,19 @@
 Відкрита екосистема для 3D-принтерів на Klipper: вебінтерфейс і застосунок для сенсорного екрана принтера
 в одному дизайні, плюс невелика служба на хості. Без підписок і хмар — усе працює на принтері через Moonraker.
 
+<p align="center"><img src="docs/images/web.png" alt="Vyron Web із живим 3D-переглядом друку" width="100%"></p>
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/images/screen-boot.gif" alt="Vyron Screen на TFT35 480×320 — від увімкнення до інтерфейсу"></td>
+    <td width="50%"><img src="docs/images/klipper-error.png" alt="Помилки Klipper простими словами"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub>Vyron Screen на TFT35 480×320 — від увімкнення до інтерфейсу</sub></td>
+    <td align="center"><sub>Помилки Klipper простими словами</sub></td>
+  </tr>
+</table>
+
 **[Демо](https://vovandukh.github.io/vyron-demo/)** — працює в браузері без принтера.
 
 > **Бета (0.5.0-beta).** Перевірено на кількох принтерах автора (Voron, CAN-голови, BTT TFT35). На іншому
@@ -18,6 +31,17 @@
 | **Vyron Core** | [`core`](core) | Служба на хості: миттєво доносить зміну теми й нову версію до всіх екранів |
 | **@vyron/shared** | [`packages/shared`](packages/shared) | Спільна логіка Web і Screen: клієнт Moonraker, помилки Klipper, теми, переклади |
 | **Встановлення** | [`install`](install) | `install.sh` / `uninstall.sh` |
+
+## Чого ще немає
+
+Vyron молодий. Це є в планах, але поки немає, тож Mainsail поруч може знадобитися
+(`--mainsail-port 66` лишає його на відстані одного кліку):
+
+- панель макросів користувача й діалоги `action:prompt` з макросів;
+- завантаження G-code з браузера (файли зі слайсера приходять через Moonraker як завжди);
+- графіки температур, exclude object, черга друку, Spoolman;
+- авторизація (API-ключі Moonraker) і кілька принтерів;
+- макет Vyron Screen під екрани, відмінні від 480×320 (більші HDMI/DSI-екрани масштабують той самий макет).
 
 ## Встановлення
 

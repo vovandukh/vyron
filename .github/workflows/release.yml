@@ -24,6 +24,8 @@ concurrency:
 
 jobs:
   release:
+    # Releases are made only in the public repository (see scripts/publish.sh in the development repo)
+    if: github.repository == 'vovandukh/vyron'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main
@@ -80,8 +82,8 @@ jobs:
           git push origin "v$V"
           git push origin HEAD:refs/heads/stable
           PREV="$(git describe --tags --abbrev=0 "v$V^" 2>/dev/null || true)"
-          # A version with a suffix (0.5.0-beta, 0.6.0-rc1) is published as a pre-release
-          PRE=""; case "$V" in *-*) PRE="--prerelease" ;; esac
+          # Only -alpha / -rc builds are pre-releases; a public beta is shown as the latest release
+          PRE=""; case "$V" in *-alpha*|*-rc*) PRE="--prerelease" ;; esac
           if [ -n "$PREV" ]; then
             gh release create "v$V" --title "Vyron $V" $PRE --generate-notes --notes-start-tag "$PREV"
           else

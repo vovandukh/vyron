@@ -3,7 +3,7 @@
 // An event (print started / finished, Klipper ready / stopped…) takes over the capsule in its colour for 3 s.
 // Cheap animation: only max-width and text opacity — no blur, no shadows.
 import { computed } from 'vue'
-import { fmtDuration } from '@vyron/shared/format'
+import { fmtDurationShort } from '@vyron/shared/format'
 import { usePrinter } from '../store'
 import { t } from '../i18n'
 
@@ -16,7 +16,7 @@ const base = computed(() => {
   if (k === 'startup') return { text: t('state.klipperStartup'), tone: 'amber' }
   if (k !== 'ready') return { text: t('state.klipperOffline'), tone: 'amber' }
   const s = p.printState
-  if (s === 'printing') return { text: t('state.printing'), tone: 'brand', eta: p.remaining == null ? '' : fmtDuration(p.remaining, t) }
+  if (s === 'printing') return { text: t('state.printing'), tone: 'brand', eta: p.remaining == null ? '' : fmtDurationShort(p.remaining, t) }
   if (s === 'paused') return { text: t('state.paused'), tone: 'amber' }
   if (s === 'complete') return { text: t('state.complete'), tone: 'green' }
   if (s === 'error') return { text: t('state.error'), tone: 'red' }
@@ -38,8 +38,9 @@ const view = computed(() => (p.event ? { text: t(p.event.key, p.event.params), t
   background:#000;border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
   font-size:1.3rem;font-weight:600;white-space:nowrap;overflow:hidden;transition:max-width .3s var(--ease),border-color .3s var(--ease)}
 .dot{flex:none;width:.75rem;height:.75rem;border-radius:50%;background:var(--tone)}
-.tx{min-width:0;overflow:hidden;text-overflow:ellipsis;animation:in .25s var(--ease)}
-.eta{flex:none;color:var(--dim);font-weight:500}
+.tx{flex:none;animation:in .25s var(--ease)}
+/* The state never gets cut — if space runs out, the time left gives way */
+.eta{min-width:0;overflow:hidden;text-overflow:ellipsis;color:var(--dim);font-weight:500}
 .eta::before{content:'·';margin-right:.5rem}
 @keyframes in{from{opacity:0;transform:translateY(.4rem)}}
 .t-dim{--tone:var(--dim);color:var(--dim)}

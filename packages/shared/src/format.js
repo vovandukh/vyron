@@ -5,6 +5,13 @@ export function fmtDuration(sec, t) {
   return h ? t('fmt.hm', { h, m }) : t('fmt.m', { m })
 }
 
+/** The same, compact for tight spots (the printer screen status pill): "2h 5m" / "5m". */
+export function fmtDurationShort(sec, t) {
+  const x = Math.max(0, Math.round(sec || 0))
+  const h = Math.floor(x / 3600), m = Math.floor((x % 3600) / 60)
+  return h ? t('fmt.hmS', { h, m }) : t('fmt.mS', { m })
+}
+
 export const fmtTemp = v => (v == null ? '–' : Math.round(v) + '°')
 export const fmtPct = v => (v == null ? '–' : Math.round(v * 100) + '%')
 

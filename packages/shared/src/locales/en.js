@@ -8,7 +8,7 @@ export default {
   'cam.state.live': 'Live', 'cam.state.error': 'No connection, retrying…', 'cam.state.unsupported': 'This camera type is not supported yet',
 
   'common.set': 'Set', 'common.off': 'Turn off', 'common.cancel': 'Cancel', 'common.save': 'Save', 'common.ok': 'OK',
-  'fmt.hm': '{h} h {m} min', 'fmt.m': '{m} min',
+  'fmt.hm': '{h} h {m} min', 'fmt.m': '{m} min', 'fmt.hmS': '{h}h {m}m', 'fmt.mS': '{m}m',
   'unit.mm': '{v} mm', 'unit.m': '{v} m',
   'eta.left': '{t} left',
 

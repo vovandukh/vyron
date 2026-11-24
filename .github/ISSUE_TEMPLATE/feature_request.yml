@@ -1,0 +1,25 @@
+name: Feature request
+description: Something you'd like Vyron to do
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: What do you want to do
+      description: Describe the task at the printer, not the button — e.g. "change filament mid-print without walking to the PC".
+    validations:
+      required: true
+  - type: textarea
+    id: now
+    attributes:
+      label: How do you do it today
+      description: In Mainsail, Fluidd, KlipperScreen, a macro…
+  - type: dropdown
+    id: part
+    attributes:
+      label: Where
+      multiple: true
+      options:
+        - Vyron Web (browser)
+        - Vyron Screen (printer touchscreen)
+        - Install / updates

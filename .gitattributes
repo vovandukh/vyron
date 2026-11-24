@@ -3,3 +3,5 @@
 *.service text eol=lf
 *.py text eol=lf
 *.conf.example text eol=lf
+scripts/*.sh text eol=lf
+.publishignore text eol=lf

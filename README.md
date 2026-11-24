@@ -5,6 +5,19 @@
 An open ecosystem for Klipper 3D printers: a web UI and a printer touchscreen app with one shared design,
 plus a small helper service on the host. No subscriptions, no cloud — everything runs on the printer through Moonraker.
 
+<p align="center"><img src="docs/images/web.png" alt="Vyron Web with a live 3D preview of the print" width="100%"></p>
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/images/screen-boot.gif" alt="Vyron Screen on a 480×320 TFT35 — from power-on to the UI"></td>
+    <td width="50%"><img src="docs/images/klipper-error.png" alt="Klipper errors explained in plain words"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub>Vyron Screen on a 480×320 TFT35 — from power-on to the UI</sub></td>
+    <td align="center"><sub>Klipper errors explained in plain words</sub></td>
+  </tr>
+</table>
+
 **[Live demo](https://vovandukh.github.io/vyron-demo/)** — runs in the browser, no printer needed.
 
 > **Beta (0.5.0-beta).** Tested on the author's printers (Voron, CAN toolheads, BTT TFT35). Other hardware may
@@ -28,6 +41,17 @@ plus a small helper service on the host. No subscriptions, no cloud — everythi
 - **Light on weak boards.** Vyron Screen takes ~9 % CPU on a BTT CB1 while printing; the boot animation flows seamlessly into the UI.
 - **Quiet updates.** A new version swaps in without a reload flash while nobody is touching the screen.
 - **Safe by design.** Klipper drives the hardware; the UI only talks to Moonraker, and Vyron Core has an allow-list that can't move, heat or print.
+
+## Not there yet
+
+Vyron is young. These are on the roadmap but missing today, so you may still want Mainsail next to it
+(`--mainsail-port 66` keeps it one click away):
+
+- user macro panel and `action:prompt` dialogs from macros;
+- uploading G-code from the browser (files from the slicer arrive through Moonraker as usual);
+- temperature graphs, exclude object, print queue, Spoolman;
+- authentication (Moonraker API keys) and multiple printers;
+- a Vyron Screen layout tuned for screens other than 480×320 (larger HDMI/DSI screens scale up the same layout).
 
 ## Install
 
