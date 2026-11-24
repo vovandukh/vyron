@@ -1,0 +1,21 @@
+{
+  "name": "vyron",
+  "private": true,
+  "version": "0.5.0-beta",
+  "vyronVersion": "0.5.0-beta",
+  "description": "Vyron — open-source web UI and touchscreen UI for Klipper printers, with a small host service",
+  "workspaces": [
+    "apps/web",
+    "apps/screen",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @vyron/web --",
+    "dev:demo": "npm run dev:demo -w @vyron/web --",
+    "build": "npm run build -w @vyron/web --",
+    "build:demo": "npm run build:demo -w @vyron/web --",
+    "dev:screen": "npm run dev -w @vyron/screen --",
+    "build:screen": "npm run build -w @vyron/screen --",
+    "build:screen:demo": "npm run build:demo -w @vyron/screen --"
+  }
+}

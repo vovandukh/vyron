@@ -1,0 +1,29 @@
+# Vyron Core — systemd service template. install.sh fills in @USER@, @CORE_DIR@ and @DATA@.
+# The service only runs next to Moonraker: neither Klipper nor Moonraker depends on it (no Requires/Before),
+# it runs at low priority with limited memory. If it crashes, the printer won't notice.
+[Unit]
+Description=Vyron Core (helper service next to Moonraker, never controls the printer)
+Documentation=https://github.com/vovandukh/vyron/tree/main/core
+After=network.target moonraker.service
+StartLimitIntervalSec=600
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=@USER@
+WorkingDirectory=@CORE_DIR@
+ExecStart=/usr/bin/python3 -m vyron_core -c @DATA@/config/vyron.conf -l @DATA@/logs/vyron-core.log
+Restart=on-failure
+RestartSec=15
+# The printer always matters more: the lowest CPU and disk priority, a memory cap
+Nice=15
+CPUWeight=10
+IOSchedulingClass=idle
+MemoryMax=96M
+# No privilege escalation; system folders read-only
+NoNewPrivileges=true
+ProtectSystem=full
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

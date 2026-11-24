@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="google" content="notranslate">
+<script>
+// Quiet update (shared/live.js): the browser runs a View Transition from the old page to this one. The old
+// snapshot is held (animations paused) until the app connects and shows data — revealReady(); at most 4 s.
+addEventListener('pagereveal', function (e) {
+  var vt = e.viewTransition
+  if (!vt) return
+  var done = false
+  function play() { if (done) return; done = true; document.getAnimations().forEach(function (a) { a.play() }) }
+  window.__vyronPlay = play
+  vt.ready.then(function () {
+    if (window.__vyronReady) return
+    document.getAnimations().forEach(function (a) { a.pause() })
+    setTimeout(play, 4000)
+  }).catch(function () {})
+})
+</script>
+<title>Vyron Screen</title>
+</head>
+<body>
+<div id="app"></div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

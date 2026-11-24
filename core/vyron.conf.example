@@ -1,0 +1,29 @@
+# Vyron Core settings. Copy to ~/printer_data/config/vyron.conf if you want to change something;
+# without this file the values below apply.
+
+[core]
+# debug | info | warning
+log_level: info
+
+[moonraker]
+# Local Moonraker socket (no network needed)
+socket: ~/printer_data/comms/moonraker.sock
+
+[design_sync]
+# Notify every open screen when the theme is changed on one of them
+enabled: true
+# How often to check for a change, seconds (at least 1)
+interval: 2
+
+[ui_watch]
+# A new UI version (after an update) — on every open screen at once
+enabled: true
+# How often to check the build files, seconds (at least 1)
+interval: 3
+# Folder with index.html and screen.html; empty — the Vyron repository the core lives in
+root:
+
+[backups]
+# Move Klipper backups after SAVE_CONFIG (printer-YYYYMMDD_HHMMSS.cfg) to backups/klipper/
+# so they don't clutter the config list. The core deletes nothing — you clean up in Vyron Web.
+enabled: true

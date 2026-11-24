@@ -1,0 +1,31 @@
+# Vyron Screen on the printer screen. Created by install/screen.sh.
+# If Vyron Screen crashes 4 times in a row within 2 minutes, the system brings KlipperScreen back.
+# A regular stop or restart (systemctl stop/restart) isn't a failure: xinit exits with code 1 on
+# SIGTERM — so codes 1/2 and termination signals count as a normal exit.
+[Unit]
+Description=Vyron Screen (printer screen)
+After=nginx.service moonraker.service
+Conflicts=KlipperScreen.service
+OnFailure=KlipperScreen.service
+StartLimitIntervalSec=120
+StartLimitBurst=4
+
+[Service]
+Type=simple
+User=@USER@
+@GROUPS@
+Environment=XDG_RUNTIME_DIR=/run/user/@UID@
+# 1 — a board with a GPU (install.sh --gpu): the browser draws with it; 0 — with the CPU
+Environment=VYRON_GPU=@GPU@
+ExecStart=/usr/bin/xinit @KIOSK@ @URL@ -- :0 -nolisten tcp -nocursor
+Restart=always
+SuccessExitStatus=1 2 SIGTERM SIGINT SIGHUP
+RestartSec=3
+# Klipper matters more than the screen: lower CPU priority, and if memory runs out
+# the system stops the browser first (systemd restarts it), not Klipper
+Nice=5
+CPUWeight=50
+OOMScoreAdjust=500
+
+[Install]
+WantedBy=multi-user.target

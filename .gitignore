@@ -1,0 +1,10 @@
+node_modules/
+dist/
+dist-demo/
+.env.local
+.vite/
+__pycache__/
+*.pyc
+
+# Local design-tool files
+.impeccable/

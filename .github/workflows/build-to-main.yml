@@ -1,0 +1,77 @@
+name: Build to main
+
+# Builds the Vue apps and puts the built files (index.html, screen.html) into the root of main,
+# where nginx on the printer and Moonraker Update Manager pick them up.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-to-main
+  cancel-in-progress: true
+
+jobs:
+  build:
+    # Loop guard: ignore the bot's own commits.
+    # (Pushes with GITHUB_TOKEN don't trigger workflows anyway; [skip ci] is an extra safeguard.)
+    if: >-
+      github.actor != 'github-actions[bot]' &&
+      !contains(github.event.head_commit.message, '[skip ci]')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: |
+          npm run build
+          npm run build:screen
+
+      - name: Check build is a single file
+        run: |
+          # vite-plugin-singlefile inlines JS/CSS/images into index.html. Nginx on the printer
+          # serves only the HTML file, so any reference to ./assets/ means a white screen.
+          if grep -qE '(src|href)="\./assets/' apps/web/dist/index.html; then
+            echo "apps/web/dist/index.html still references ./assets/ — single-file build is broken"
+            exit 1
+          fi
+
+      - name: Copy build to repository root
+        run: |
+          # The build is one self-contained HTML; the assets/ folder in the root isn't needed anymore.
+          rm -rf assets
+          cp apps/web/dist/index.html index.html
+          # Vyron Screen (the printer touchscreen) — a separate single-file app
+          cp apps/screen/dist/index.html screen.html
+
+      - name: Commit and push build
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A index.html screen.html
+          # Remove old bundles from the repository; --ignore-unmatch so the step doesn't fail when assets/ is gone.
+          git rm -r -q --cached --ignore-unmatch assets
+          if git diff --cached --quiet; then
+            echo "Build output unchanged, nothing to commit."
+            exit 0
+          fi
+          git commit -m "chore: build production assets [skip ci]"
+          # If new commits landed on main during the build — pull them and push again.
+          git pull --rebase origin main
+          git push origin HEAD:main

@@ -1,0 +1,18 @@
+# Vyron boot animation on the printer screen (TFT 480×320, straight to the framebuffer). Created by install/screen.sh.
+# Starts as soon as the disks are mounted and plays until the Vyron Screen X server starts (splash.py notices
+# that and exits); Vyron Screen continues the same animation in the UI. No Conflicts=vyron-screen: both services
+# start in the same boot transaction, and systemd would drop one of them — the screen — because of the conflict.
+[Unit]
+Description=Vyron — boot animation on the printer screen
+DefaultDependencies=no
+After=local-fs.target systemd-udevd.service
+ConditionPathExists=@FB@
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 @REPO@/install/splash/splash.py --fb @FB@
+TimeoutStopSec=3
+StandardOutput=null
+
+[Install]
+WantedBy=sysinit.target

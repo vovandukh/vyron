@@ -1,0 +1,14 @@
+{
+  "name": "@vyron/shared",
+  "private": true,
+  "version": "0.5.0-beta",
+  "description": "Logic shared by Vyron Web and Vyron Screen: Moonraker client, Klipper object and error parsing, themes, logo, translations",
+  "type": "module",
+  "exports": {
+    "./fonts.css": "./src/fonts.css",
+    "./*": "./src/*.js"
+  },
+  "dependencies": {
+    "@fontsource-variable/montserrat": "^5.3.0"
+  }
+}
